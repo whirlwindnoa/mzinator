@@ -1,5 +1,6 @@
 "use strict";
 const fs = require('fs');
+const Database = require('./misc/db.js');
 
 if(!fs.existsSync('.env')) {
     fs.copyFileSync('.env.template', '.env');
@@ -9,6 +10,7 @@ if(!fs.existsSync('.env')) {
 
 require('dotenv').config();
 global.env = Object.assign({}, process.env);
+global.db = new Database('mzinator');
 
 const { Collection, Client, Events, GatewayIntentBits } = require('discord.js');
 
@@ -22,7 +24,7 @@ for (const file of commandFiles) {
 }
 
 client.once(Events.ClientReady, c => {
-	console.log(`Ready! Logged in as ${c.user.tag}`);
+	console.log(`ready... logged in as ${c.user.tag}`);
 });
 
 client.on('messageCreate', (message) => {
