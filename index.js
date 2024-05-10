@@ -27,7 +27,7 @@ client.once(Events.ClientReady, c => {
 	console.log(`ready... logged in as ${c.user.tag}`);
 });
 
-client.on('messageCreate', (message) => {
+client.on('messageCreate', async (message) => {
     if (!message.content.startsWith(env.PREFIX) || message.author.bot) {
         return;
     }
@@ -40,10 +40,9 @@ client.on('messageCreate', (message) => {
     const command = client.commands.get(commandName);
 
     try {
-        command.execute(message, args);
-        console.log(message, args);
+        await command.execute(message, args);
     } catch (error) {
-        message.reply('An error has occured while executing this command.');
+        message.channel.send('An error has occured while executing this command.');
         
         console.error(error);
     }
