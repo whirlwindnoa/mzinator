@@ -2,6 +2,8 @@
 const fs = require('fs');
 const Database = require('./misc/db.js');
 
+require('./misc/embed.js');
+
 if(!fs.existsSync('.env')) {
     fs.copyFileSync('.env.template', '.env');
 
@@ -12,10 +14,11 @@ require('dotenv').config();
 global.env = Object.assign({}, process.env);
 global.db = new Database('mzinator');
 
-const { Collection, Client, Events, GatewayIntentBits } = require('discord.js');
+const { Collection, Client, Events, GatewayIntentBits, DiscordAPIError } = require('discord.js');
 
-const client = new Client({ intents: [GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
+global.client = new Client({ intents: [GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 client.commands = new Collection();
+client.DiscordAPIError = DiscordAPIError;
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {

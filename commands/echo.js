@@ -1,7 +1,7 @@
 module.exports = {
     name: "echo",
-    description: "repeats after you",
+    description: "debug",
     execute(message, args) {
-        message.channel.send(args.join(' '));
+        message.channel.send(args[2]);
     }
 }

@@ -23,7 +23,9 @@ module.exports = {
     },
     "globals": {
         "env": true,
-        "db": true
+        "db": true,
+        'simpleEmbed': true,
+        'client': true
     },
     "rules": {
         "no-unused-vars": "off"
